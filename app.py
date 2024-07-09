@@ -56,7 +56,12 @@ def save_images():
             for file in files:
                 zipf.write(os.path.join(root, file))
 
-    return send_file('images.zip', as_attachment=True)
+    # Extract product details
+    title = soup.find('h1', {'id': 'itemTitle'}).get_text(strip=True) if soup.find('h1', {'id': 'itemTitle'}) else 'No title found'
+    price = soup.find('span', {'id': 'prcIsum'}).get_text(strip=True) if soup.find('span', {'id': 'prcIsum'}) else 'No price found'
+    description = soup.find('div', {'id': 'desc_div'}).get_text(strip=True) if soup.find('div', {'id': 'desc_div'}) else 'No description found'
+
+    return render_template('result.html', title=title, price=price, description=description, image_urls=image_urls)
 
 if __name__ == '__main__':
-    app.run(port=8881)
+    app.run()
