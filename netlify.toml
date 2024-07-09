@@ -1,0 +1,11 @@
+[build]
+  command = "gunicorn app:app"
+  publish = "."
+
+[dev]
+  command = "gunicorn app:app"
+  targetPort = 8000
+  port = 8888
+
+[[plugins]]
+  package = "@netlify/plugin-python"
